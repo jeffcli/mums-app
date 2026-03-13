@@ -1,8 +1,8 @@
 import { type ChangeEvent, type FormEvent, useMemo, useState } from "react";
 import api from "../services/api";
-import type { Order } from "../types/order";
+import type { CreateOrderRequest, Order } from "../types/order";
 
-const initialFormData: Order = {
+const initialFormData: CreateOrderRequest = {
   customerName: "",
   phone: "",
   addressLine1: "",
@@ -22,9 +22,9 @@ function estimatePrice(quantity: number): number {
 }
 
 export default function NewOrderPage() {
-  const [formData, setFormData] = useState<Order>(initialFormData);
-  const [message, setMessage] = useState<string>("");
-  const [error, setError] = useState<string>("");
+  const [formData, setFormData] = useState<CreateOrderRequest>(initialFormData);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const estimatedPrice = useMemo(
@@ -39,6 +39,7 @@ export default function NewOrderPage() {
       if (name === "quantity") {
         return { ...prev, quantity: Number(value) };
       }
+
       return { ...prev, [name]: value };
     });
   }
@@ -52,7 +53,7 @@ export default function NewOrderPage() {
     try {
       const response = await api.post<Order>("/orders", formData);
       setMessage(
-        `Order created successfully. Total price: $${response.data.totalPrice}`,
+        `Order created successfully for ${response.data.customerName}. Total price: $${response.data.totalPrice}`,
       );
       setFormData(initialFormData);
     } catch (err) {
@@ -71,7 +72,7 @@ export default function NewOrderPage() {
             New Mum Order
           </h1>
           <p className="mt-2 text-sm text-slate-600">
-            Enter customer information and submit a new fundraiser order.
+            Enter customer information to create a new order.
           </p>
         </div>
 

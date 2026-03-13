@@ -1,36 +1,44 @@
-package com.mumsale.mum_sale_backend.model;
+package com.mumsale.mum_sale_backend.dto;
 
-import jakarta.persistence.*;
-import java.math.BigDecimal;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
-@Entity
-@Table(name = "orders")
-public class Order {
+public class CreateOrderRequest {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @NotBlank(message = "Customer name is required")
+    @Size(max = 100, message = "Customer name must be at most 100 characters")
     private String customerName;
+
+    @NotBlank(message = "Phone is required")
+    @Size(max = 20, message = "Phone must be at most 20 characters")
     private String phone;
+
+    @NotBlank(message = "Address is required")
+    @Size(max = 255, message = "Address must be at most 255 characters")
     private String addressLine1;
+
+    @NotBlank(message = "City is required")
+    @Size(max = 100, message = "City must be at most 100 characters")
     private String city;
+
+    @NotBlank(message = "State is required")
+    @Size(min = 2, max = 2, message = "State must be a 2-letter abbreviation")
     private String state;
+
+    @NotBlank(message = "ZIP code is required")
+    @Pattern(regexp = "^\\d{5}(-\\d{4})?$", message = "ZIP code must be in 5-digit or ZIP+4 format")
     private String zip;
+
+    @NotBlank(message = "Mum color is required")
+    @Size(max = 50, message = "Mum color must be at most 50 characters")
     private String mumColor;
+
+    @Min(value = 1, message = "Quantity must be at least 1")
     private Integer quantity;
-    private BigDecimal totalPrice;
-    private String status;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    public Order() {
-    }
-
-    public Long getId() {
-        return id;
+    public CreateOrderRequest() {
     }
 
     public String getCustomerName() {
@@ -95,29 +103,5 @@ public class Order {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-    }
-
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }

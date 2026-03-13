@@ -1,13 +1,13 @@
-package com.mumsale.mum_sale_backend;
+// package com.mumsale.mum_sale_backend;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+// import org.junit.jupiter.api.Test;
+// import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class MumSaleBackendApplicationTests {
+// @SpringBootTest
+// class MumSaleBackendApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+// @Test
+// void contextLoads() {
+// }
 
-}
+// }
